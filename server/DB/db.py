@@ -107,3 +107,9 @@ def get_next_pending_log(db):
       return db.query(Logs).filter(Logs.status == "pending").order_by(Logs.created_at.asc()).first()
     except SQLAlchemyError as e:
       raise RuntimeError(f"Erro ao buscar próximo log pendente: {e}")
+
+def get_email_status(db, log_id: int):
+    try:
+        return db.query(Logs.id, Logs.status, Logs.attempts, Logs.error_message).filter(Logs.id == log_id).first()
+    except SQLAlchemyError as e:
+        raise RuntimeError(f"Erro ao buscar status do e-mail: {e}")

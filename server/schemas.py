@@ -31,9 +31,6 @@ class EmailResponse(BaseModel):
     class Config:
         orm_mode = True
 
-class EmailStatusRequest(BaseModel):
-    id: int
-    user_id: int
 
 class EmailStatusResponse(BaseModel):
     id: int
