@@ -113,3 +113,9 @@ def get_email_status(db, log_id: int):
         return db.query(Logs.id, Logs.status, Logs.attempts, Logs.error_message).filter(Logs.id == log_id).first()
     except SQLAlchemyError as e:
         raise RuntimeError(f"Erro ao buscar status do e-mail: {e}")
+
+def get_log_by_id(db, log_id: int):
+    try:
+        return db.query(Logs).filter(Logs.id == log_id).first()
+    except SQLAlchemyError as e:
+        raise RuntimeError(f"Erro ao buscar log pelo ID: {e}")

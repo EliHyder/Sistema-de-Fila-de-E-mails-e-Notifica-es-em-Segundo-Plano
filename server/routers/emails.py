@@ -2,6 +2,7 @@ from fastapi import APIRouter, HTTPException, Depends, status
 from sqlalchemy.orm import Session
 from server.schemas import UserCreate, UserResponse, EmailRequest, EmailResponse, EmailStatusResponse
 from server.DB.db import get_db, create_user as db_create_user, create_log, get_email_status
+from server.worker import enqueue_email_task
 
 router = APIRouter(
     prefix="/emails",
@@ -25,7 +26,8 @@ async def send_email(email: EmailRequest, db: Session = Depends(get_db)):
         created_email = create_log(db, user_id=email.user_id, subject=email.subject, body=email.body)
         
         # ⚠️ É AQUI QUE ENTRARÁ O RQ (REDIS) PARA ENFILEIRAR A TAREFA EM SEGUNDO PLANO!
-        
+        enqueue_email_task(log_id=created_email.id)
+
         return created_email
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
