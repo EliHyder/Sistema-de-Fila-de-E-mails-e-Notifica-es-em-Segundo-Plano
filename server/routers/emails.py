@@ -1,8 +1,8 @@
 from fastapi import APIRouter, HTTPException, Depends, status
 from sqlalchemy.orm import Session
-from server.schemas import UserCreate, UserResponse, EmailRequest, EmailResponse, EmailStatusResponse
-from server.DB.db import get_db, create_user as db_create_user, create_log, get_email_status
-from server.worker import enqueue_email_task
+from schemas import UserCreate, UserResponse, EmailRequest, EmailResponse, EmailStatusResponse
+from DB.db import get_db, create_user as db_create_user, create_log, get_email_status
+from worker import enqueue_email_task
 
 router = APIRouter(
     prefix="/emails",

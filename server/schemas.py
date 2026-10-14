@@ -1,22 +1,24 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, ConfigDict, EmailStr
 
 
 class UserCreate(BaseModel):
     name: str
     email: EmailStr
 
+
 class UserResponse(BaseModel):
     id: int
     name: str
     email: EmailStr
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
+
 
 class EmailRequest(BaseModel):
     user_id: int
     subject: str
     body: str
+
 
 class EmailResponse(BaseModel):
     id: int
@@ -28,8 +30,8 @@ class EmailResponse(BaseModel):
     error_message: str | None
     created_at: str
     updated_at: str | None
-    class Config:
-        orm_mode = True
+
+    model_config = ConfigDict(from_attributes=True)
 
 
 class EmailStatusResponse(BaseModel):
@@ -37,7 +39,5 @@ class EmailStatusResponse(BaseModel):
     status: str
     attempts: int
     error_message: str | None
-    
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)

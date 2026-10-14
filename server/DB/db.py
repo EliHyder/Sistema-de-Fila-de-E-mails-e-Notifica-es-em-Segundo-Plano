@@ -17,7 +17,7 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 # Base declarativa para criar os modelos de tabelas
 Base = declarative_base()
 
-from models import User, Logs
+from .models import User, Logs
 
 Base.metadata.create_all(bind=engine)  # Cria as tabelas no banco de dados
 

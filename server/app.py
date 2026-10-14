@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from server.routers import emails
+from routers import emails
 
 app = FastAPI()
 

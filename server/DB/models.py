@@ -1,6 +1,7 @@
 # models.py
-from db import Base
-from sqlalchemy import Column, Integer, String, ForeignKey, relationship
+from .db import Base
+from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy.orm import relationship
 
 
 class User(Base):
@@ -10,6 +11,8 @@ class User(Base):
   name = Column(String, nullable=False)
   email = Column(String, unique=True, index=True, nullable=False)
   created_at = Column(String, nullable=False)
+
+  logs = relationship("Logs", back_populates="user")
 
   def __repr__(self):
     return f"<User(name='{self.name}', email='{self.email}', created_at='{self.created_at}')>"
